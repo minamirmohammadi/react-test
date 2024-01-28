@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
+import Navbar from './components/Navbar'
+import Contacts from './components/contact/Contacts'
+import { Navigate, Route, Routes, } from 'react-router-dom';
+import Addcontact from '../src/components/contact/Addcontact';
+import Editcontact from '../src/components/contact/Editcontact';
+import Contact from './components/contact/Contact';
 
-function App() {
+export default function App() {
+  const [getcontacts, setcontacts] = useState([])
+  const [loading, setloading] = useState(false)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div>
+      <Navbar />
+      <Navigate to={"/contacts"} />
+      <Routes>
+        <Route path="/contacts" element={<Contacts contacts={getcontacts} loading={loading} />} />
+        <Route path='/contacts/add' element={<Addcontact />} />
+        <Route path='/contacts/:id' element={<Contact />} />
+        <Route path='/contacts/edit/:id' element={<Editcontact />} />
 
-export default App;
+      </Routes>
+    </div>
+  )
+}
